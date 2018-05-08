@@ -26,7 +26,9 @@
 给vector一个新长度，这个长度等于n。如果n比当前长度小，那么，在这个向量中位于位置n之后的元素会被删除掉。如果n比当前长度大，那新的元素（初始化为默认值）会被添加到向量中。
 
 #list 
-不能用标准库的sort函数来排序list,而要调用它自己的sort方法
+不能用标准库的sort函数来排序list,而要调用它自己的sort方法   
+list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+n` 操作</font>   
+但支持 `++` , `--` 来移到上下一个元素。
 
 	sort()
 	sort(cmp) 
@@ -37,6 +39,45 @@
 
 	list<Student_info> students;
 	students.sort(compare);
+
+
+
+#map
+映射表，一种支持高效<font color=red>**查询**</font>的`关联`容器   
+自动排序的，无法对它进行排序操作，因此很多库中的排序算法对它无效   
+被声明为const的map没有 `[]` 运算符，因为`[]` 访问没有的键时会导致构造一个默认的键值对，这与 const map 不符
+
+	string s;
+	map<string, int> counters;   //一个从字符串到int的映射表
+	while(cin>>s) 
+		++counters[s];
+	for(map<string, int>::const_iterator it=counters.begin();it!=counters.end();++it) {
+		cout << it->first << "\t" << it->second << endl;
+	}
+> 一种计算输入中每个单词出现次数的方法   
+> 如果用一个未曾出现过的键来作为索引，那么映射表会自动创建一个具有这个键的元素，值被初始化为默认值。
+
+> <font color=red> C++的 `map` 比最好的散列表数据结构速度稍慢，但是使用方便，而且会自动排序，散列表还要设计一个好的散列函数，</font>  
+> map底层实现为平衡树
+
+###map<K, V> m(cmp)
+使用判定 `cmp` 来确定元素顺序的映射表
+
+###find()
+查找指定键的值，返回指向这个键值对的迭代器
+
+	map<string, int>::const_iterator it = tempMap.find("hello");
+	cout << it->first << "--->" << it->second << endl;
+> 找不到时返回 tempMap.end()
+
+##pair
+与映射表相互关联的库类型，用来同时接触键和关联的值   
+保存了两个分别叫做 `first` 和 `second` 的元素   
+映射表的每一个元素都是一个数对
+
+对于一个键类型为K而值类型为V的映射表来说，关联的pair类型是pair<const K, V>, 注意到这里是const，因此键的内容不会被修改
+
+
 
 #<string\>
 
@@ -89,6 +130,10 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 
 #<algorithm\>
 <font color=red>**这些算法函数 经过了优化，效率很高**</font>
+
+###sort()
+只有 `vector` 和 `string` 支持
+
 ###copy()
 
 	copy(bottom.begin(), bottom.end(), back_inserterer(ret));
@@ -146,12 +191,24 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 	
 	bool fgrade(const Student_info& s) {return grade(s)<60;}
 
+###remove(b, e, t)
+作用与remove_if一样，但是是把等于t的元素“删除”
+
 > remove_if“删除”的机制是把不满足谓词函数的都复制到容器的<font color=red>开头位置</font>,  
 > 返回指向最后一个不被“删除"的数据的<font color=red>后一个</font>位置的迭代器
 
 ![](imgs/remove_if1.png)
 
 ![](imgs/remove_if2.png)
+
+
+###transform()
+
+	transform(students.begin(), students.end(), back_inserter(grades), grade);
+> 前两个迭代器指定了范围，一个输入序列  
+> 第三个迭代器指示了一个目的地，它将保存第四个参数函数的运行结果，要保证目的地有足够的空间，这里用插入迭代器就肯定够空间了  
+> 第四个参数是函数指针，transform将这个函数应用到输入序列的每一
+个元素中
 
 
 ###partition() 和 stable_partition()
@@ -167,6 +224,7 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 	students.erase(iter, nums.end());
  
 
+
 ###TIPS
 * sort 、 remove_if 、 partition 函数都不会改变容器的大小，缩短容器是交给容器的erase成员函数来完成的，<font color=red>体现了的是改变容器自身属性的行为应该由容器自己来负责</font> 
 
@@ -178,13 +236,7 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 	}
 > 对给定区间求和，第三个参数指定了求和结果的开始，和的类型就是第三个参数的类型
 
-###transform()
 
-	transform(students.begin(), students.end(), back_inserter(grades), grade);
-> 前两个迭代器指定了范围，一个输入序列  
-> 第三个迭代器指示了一个目的地，它将保存第四个参数函数的运行结果，要保证目的地有足够的空间，这里用插入迭代器就肯定够空间了  
-> 第四个参数是函数指针，transform将这个函数应用到输入序列的每一
-个元素中
 #<iterator\>
 ###back_inserter()
 用一个容器作为它的参数并产生一个迭代器，在生成的迭代器被用作一个目的地的时候，他会<font color=red>向容器末端添加数值</font>。  
@@ -197,13 +249,54 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 > 这个运行时会出错，没有扩容操作了, <font color=red>越界</font>访问了。 但是通得过编译。
 
 ###插入迭代器
-<font color=red>`back_inserter`</font>：创建一个使用push\_back的迭代器   
-<font color=red>`inserter`</font>：此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。**元素将被插入到给定迭代器所表示的元素之前**。   
+<font color=red>`back_inserter`</font>：创建一个使用push\_back的迭代器,这个容器必须支持链表、向量以及字符串类型都会支持的push\_back操作  
+<font color=red>`inserter`</font>：此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。**元素将被插入到给定迭代器所表示的元素之前**。这个容器必须支持push\_front操作----链表会支持，但是字符串和向量不支持。   
 <font color=red>`front_inserter`</font>：创建一个使用push_front的迭代器（**元素总是插入到容器第一个元素之前**）
+
+#<cstdlib\>
+
+rand() 
+返回在域[0, RAND_MAX) 中的一个随机整数
+
+	记得在程序中用 srand((unsigned)time(NULL)) 初始化随机数种子，不然结果都一样
+
+	自定义的nrand(n)函数，返回在域[0,n)中的一个随机的整数    
+	int nrand(int n) {
+		if (n<0 || n>RAND_MAX)
+			throw logic_error("Argument to nrand is out of range.");
+		const int bucket_size = RAND_MAX / n;
+		int r;
+		do {
+			r = rand() / bucket_size;
+		} while (r >= n);
+	
+		return r;
+	}
+
+> 把可利用的随机数分到**长度相等**的存储桶中，计算一个随机数并且返回它所在的编号
+
+>* 试图通过 `rand()%n` 来返回 [0,n) 的随机数会<font color=red>失败</font>, 因为 rand() 返回的只是 <font color=red>伪随机数</font>，当商是小整数的时候，许多C++系统环境的伪随机数生成器所产生的余数并不是绝对随机的，   
+>* 第二个原因如果n<font color=red>很大</font>，那么RAND_MAX就不会均匀地被n除尽。如：RAND_MAX取32767（所有实现中，至少都要达到这个值），n取20000， 那么15000（只有15000），而10000（可以是10000或30000）, 得到10000的概率是15000的两倍
+
+  
+>rand的内部实现是用线性同余法做的，他不是真的随机数，只不过是因为其周期特别长，所以有一定的范围里可看成是随机的，式子如下  
+rand = rand*const\_1 + c\_var;   
+srand函数就是给它的第一个rand值。
+
+> 用"int x = rand() % 100;"来生成 0 到 100 之间的随机数这种方法是不或取的， 
+比较好的做法是： j=(int)(ｎ*rand()/(RAND_MAX+1.0))　产生一个0到ｎ之间的随机
 
 #static
 * 用在函数中的局部变量中作用是具有全局寿命，即函数中只初始化一次, static const 初始化后不能再改变
 * 用在一个文件的全局变量上，表示仅当前文件可见
+
+#typedef
+简写，并且增强<font color=red>可读性</font>
+
+	typedef vector<string> Rule;  //规则的类型
+	typedef vector<Rule> Rule_collection;  //规则集合的类型
+	typedef map<string, Rule_collection> Grammer;  //映射表的类型
+	
 
 #容器
 ###empty()
@@ -223,3 +316,7 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 #TIPS
 * <font color=red>`算法` 、`容器` 、`迭代器`</font> ，三者配合，C++的思想
 * 算法作用于容器的**元素** ---- 并不是作用于容器
+* 把find()独立到算法库，而不是当作容器的成员，提高了C++的**灵活型**，同时降低了标准库的**复杂性**，体现的是更高级的设计。
+
+#注意
+* 对于有限编译器，容器类型嵌套是两个 `>` 之间要有<font color=red>**空格**</font>, 如 `map<string, vector<int> >` 否则编译器无法识别
