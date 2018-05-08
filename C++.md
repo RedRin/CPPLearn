@@ -223,6 +223,29 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 	vector<double> zeros(iter, nums.end());
 	students.erase(iter, nums.end());
  
+###replace()
+
+	int myints[] = { 10, 20, 30, 30, 20, 10, 10, 20 };
+	vector<int> myvector (myints, myints+8);            // 10 20 30 30 20 10 10 20
+	replace (myvector.begin(), myvector.end(), 20, 99); // 10 99 30 30 99 10 10 9
+
+###reverse()
+	
+	vector<int> myvector = { 1,2,3,4,5,6,7,8,9 };
+	reverse(myvector.begin(), myvector.end());       // 9 8 7 6 5 4 3 2 1
+
+
+###swap()  泛型
+
+	int x=10, y=20;                         // x:10 y:20
+  	swap(x,y);                              // x:20 y:10
+
+
+###binary_search()
+
+	vector<int> v = {1,2,3,4,5,6};
+	sort (v.begin(), v.end());
+	if (binary_search (v.begin(), v.end(), 3)) {}
 
 
 ###TIPS
