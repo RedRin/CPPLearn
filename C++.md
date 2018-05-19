@@ -134,6 +134,10 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 ###sort()
 只有 `vector` 和 `string` 支持
 
+###stable_sort()
+
+![](imgs/sort.png)
+
 ###copy()
 
 	copy(bottom.begin(), bottom.end(), back_inserterer(ret));
@@ -210,6 +214,8 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 > 第四个参数是函数指针，transform将这个函数应用到输入序列的每一
 个元素中
 
+![](imgs/transform.png)
+
 
 ###partition() 和 stable_partition()
 以一个序列作为参数并重新排列序列的元素，以使满足谓词的元素排在那些不满足的元素之前。    
@@ -247,6 +253,25 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 	sort (v.begin(), v.end());
 	if (binary_search (v.begin(), v.end(), 3)) {}
 
+###fill(b,e,t)
+把由输入迭代器b和e界定的序列的值设为t。返回void类型
+
+###lexicographical_compare(b,e,b2,e2)
+由 [b,e) 界定的序列是否比 [b2,e2) 界定的序列小（这个小的意义 同字符串大小的比较）。通过 `<`运算符 比较。
+
+###lexicographical_compare(b,e,b2,e2,p)
+同上，不过是用 `函数p` 来进行比较
+
+###max_element(b,e)
+###min_element(b,e)
+
+###replace\_copy()和reverse\_copy()
+
+![](imgs/algorithm0.png)
+
+###unique()
+
+![](imgs/unique.png)
 
 ###TIPS
 * sort 、 remove_if 、 partition 函数都不会改变容器的大小，缩短容器是交给容器的erase成员函数来完成的，<font color=red>体现了的是改变容器自身属性的行为应该由容器自己来负责</font> 
