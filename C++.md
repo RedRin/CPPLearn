@@ -27,7 +27,7 @@
 
 # list
 不能用标准库的sort函数来排序list,而要调用它自己的sort方法   
-list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+n` 操作</font>   
+list的迭代器没有定义 `+` 运算符，因此不能 `iter+n` 操作   
 但支持 `++` , `--` 来移到上下一个元素。
 
 	sort()
@@ -43,7 +43,7 @@ list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+
 
 
 # map
-映射表，一种支持高效<font color=red>**查询**</font>的`关联`容器   
+映射表，一种支持高效**查询**的`关联`容器   
 自动排序的，无法对它进行排序操作，因此很多库中的排序算法对它无效   
 被声明为const的map没有 `[]` 运算符，因为`[]` 访问没有的键时会导致构造一个默认的键值对，这与 const map 不符
 
@@ -57,7 +57,7 @@ list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+
 > 一种计算输入中每个单词出现次数的方法   
 > 如果用一个未曾出现过的键来作为索引，那么映射表会自动创建一个具有这个键的元素，值被初始化为默认值。
 
-> <font color=red> C++的 `map` 比最好的散列表数据结构速度稍慢，但是使用方便，而且会自动排序，散列表还要设计一个好的散列函数，</font>  
+>  C++的 `map` 比最好的散列表数据结构速度稍慢，但是使用方便，而且会自动排序，散列表还要设计一个好的散列函数，  
 > map底层实现为平衡树
 
 ### map<K, V> m(cmp)
@@ -88,7 +88,7 @@ list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+
 ### 构造string(iterator first, iterator last)
 
 ### wstring
-<font color=red>宽字符版</font>的string
+宽字符版的string
 
 	wstring wstr = "你好 ";
 	wcout << wstr;
@@ -96,7 +96,7 @@ list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+
 
 # iterator
 > `*` 的优先级比 `.` 运算符低， `*ite.name` 会被解释为 `*(ite.name)`   
-> 而与 `++` 和 `--` 相同优先级， `*ite++` 等价于 `*(ite++)` 解释为 先取 `*ite` 然后对 <font color=red>`ite`</font> 加一
+> 而与 `++` 和 `--` 相同优先级， `*ite++` 等价于 `*(ite++)` 解释为 先取 `*ite` 然后对 `ite` 加一
 
 	while (ite != retCur.end()) {
 		cout << *ite++ << endl;
@@ -104,7 +104,7 @@ list的迭代器没有定义 `+` 运算符，<font color=red>因此不能 `iter+
 
 > `->` 和 `.` 运算符优先级相同， `ite->stu.name` 解释为 `ite->stu 的 name`
 
-<font color=red> 如果一个容器支持索引，那么它的迭代器也会支持</font>
+ 如果一个容器支持索引，那么它的迭代器也会支持
 
 	string::iterator ite = string("hello").end();
 	beg[-1];    //等价于*(beg-1)
@@ -129,7 +129,7 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 	tolower(c)
 
 # <algorithm\>
-<font color=red>**这些算法函数 经过了优化，效率很高**</font>
+**这些算法函数 经过了优化，效率很高**
 
 ### sort()
 只有 `vector` 和 `string` 支持
@@ -150,7 +150,7 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 	find_if ( InputIterator first, InputIterator last, Predicate pred );
 > Returns an iterator to the first element in the range [first,last) for which applying pred to it, is true.   
 > 这个 pred 是一个自定义的 bool 函数， 它的参数类型是指定的容器的元素的类型，如string要填char  
-> <font color=red>不能与 const_iterator 搭配 </font>   
+> 不能与 const_iterator 搭配    
 > 失败时返回 `last`
 
 ### equal()
@@ -159,7 +159,7 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
                InputIterator2 first2 );
 	例子： 回文的一种计算方法
 	return equal(s.begin(), s.end(), s.rbegin());
-> 头两个迭代器指示了第一个序列，第三个参数则是第二个序列的起点。equal<font color=red>假设</font>第二个序列的长度足以容纳第一个序列的长度，因此不需要结尾迭代器
+> 头两个迭代器指示了第一个序列，第三个参数则是第二个序列的起点。equal假设第二个序列的长度足以容纳第一个序列的长度，因此不需要结尾迭代器
 
 ### find()
 
@@ -180,7 +180,7 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 	vector<double> nonzero;
 	remove_copy(s.homework.begin(), s.homework.end(), back_inserter(nonzero), 0);
 > remove_copy函数查找与一个特定值匹配的所有值并把这些值从容器中“删除”掉。在输入序列中所有不被“删除”的值将被复制到目的地。  
-> 这里的删除不是指传进来的容器，传来的容器<font color=red>不受影响</font>
+> 这里的删除不是指传进来的容器，传来的容器不受影响
 
 ### remove\_copy\_if()
 
@@ -199,8 +199,8 @@ const指的是不能改变指向的容器中的值，但是可以改变指向
 ### remove(b, e, t)
 作用与remove_if一样，但是是把等于t的元素“删除”
 
-> remove_if“删除”的机制是把不满足谓词函数的都复制到容器的<font color=red>开头位置</font>,  
-> 返回指向最后一个不被“删除"的数据的<font color=red>后一个</font>位置的迭代器
+> remove_if“删除”的机制是把不满足谓词函数的都复制到容器的开头位置,  
+> 返回指向最后一个不被“删除"的数据的后一个位置的迭代器
 
 ![](imgs/remove_if1.png)
 
@@ -275,7 +275,7 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 ![](imgs/unique.png)
 
 ### TIPS
-* sort 、 remove_if 、 partition 函数都不会改变容器的大小，缩短容器是交给容器的erase成员函数来完成的，<font color=red>体现了的是改变容器自身属性的行为应该由容器自己来负责</font>
+* sort 、 remove_if 、 partition 函数都不会改变容器的大小，缩短容器是交给容器的erase成员函数来完成的，体现了的是改变容器自身属性的行为应该由容器自己来负责
 
 # <numeric\>  算法相关， 数值运算
 ### accumulate()
@@ -288,19 +288,19 @@ partition可能会破坏原先的顺序，而stable_partition会让各区域的�
 
 # <iterator\>
 ### back_inserter()
-用一个容器作为它的参数并产生一个迭代器，在生成的迭代器被用作一个目的地的时候，他会<font color=red>向容器末端添加数值</font>。  
+用一个容器作为它的参数并产生一个迭代器，在生成的迭代器被用作一个目的地的时候，他会向容器末端添加数值。  
 例如，在back_inserter(ret)被用作目的地的时候，它会为ret添加一个元素。   
 
 	copy(bottom.begin(), bottom.end(), back_inserterer(ret));  
 > 会扩容， 复制和扩容被分离了，扩容由back_inserter()来处理
 
 	copy(bottom.begin(), bottom.end(), ret.end());
-> 这个运行时会出错，没有扩容操作了, <font color=red>越界</font>访问了。 但是通得过编译。
+> 这个运行时会出错，没有扩容操作了, 越界访问了。 但是通得过编译。
 
 ### 插入迭代器
->	<font color=red>`back_inserter`</font>：创建一个使用push\_back的迭代器,这个容器必须支持链表、向量以及字符串类型都会支持的push\_back操作  
->	<font color=red>`inserter`</font>：此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。**元素将被插入到给定迭代器所表示的元素之前**。这个容器必须支持push\_front操作----链表会支持，但是字符串和向量不支持。   
->	<font color=red>`front_inserter`</font>：创建一个使用push\_front的迭代器（**元素总是插入到容器第一个元素之前**）  
+>	`back_inserter`：创建一个使用push\_back的迭代器,这个容器必须支持链表、向量以及字符串类型都会支持的push\_back操作  
+>	`inserter`：此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。**元素将被插入到给定迭代器所表示的元素之前**。这个容器必须支持push\_front操作----链表会支持，但是字符串和向量不支持。   
+>	`front_inserter`：创建一个使用push\_front的迭代器（**元素总是插入到容器第一个元素之前**）  
 
 
 # <cstdlib\>
@@ -328,8 +328,8 @@ int nrand(int n) {
 
 > 把可利用的随机数分到**长度相等**的存储桶中，计算一个随机数并且返回它所在的编号
 
->* 试图通过 `rand()%n` 来返回 [0,n) 的随机数会<font color=red>失败</font>, 因为 rand() 返回的只是 <font color=red>伪随机数</font>，当商是小整数的时候，许多C++系统环境的伪随机数生成器所产生的余数并不是绝对随机的，   
->* 第二个原因如果n<font color=red>很大</font>，那么RAND_MAX就不会均匀地被n除尽。如：RAND_MAX取32767（所有实现中，至少都要达到这个值），n取20000， 那么15000（只有15000），而10000（可以是10000或30000）, 得到10000的概率是15000的两倍
+>* 试图通过 `rand()%n` 来返回 [0,n) 的随机数会失败, 因为 rand() 返回的只是 伪随机数，当商是小整数的时候，许多C++系统环境的伪随机数生成器所产生的余数并不是绝对随机的，   
+>* 第二个原因如果n很大，那么RAND_MAX就不会均匀地被n除尽。如：RAND_MAX取32767（所有实现中，至少都要达到这个值），n取20000， 那么15000（只有15000），而10000（可以是10000或30000）, 得到10000的概率是15000的两倍
 
 
 >rand的内部实现是用线性同余法做的，他不是真的随机数，只不过是因为其周期特别长，所以有一定的范围里可看成是随机的，式子如下  
@@ -344,7 +344,7 @@ srand函数就是给它的第一个rand值。
 * 用在一个文件的全局变量上，表示仅当前文件可见
 
 # typedef
-简写，并且增强<font color=red>可读性</font>
+简写，并且增强可读性
 
 	typedef vector<string> Rule;  //规则的类型
 	typedef vector<Rule> Rule_collection;  //规则集合的类型
@@ -367,9 +367,9 @@ srand函数就是给它的第一个rand值。
 
 
 # TIPS
-* <font color=red>`算法` 、`容器` 、`迭代器`</font> ，三者配合，C++的思想
+* `算法` 、`容器` 、`迭代器` ，三者配合，C++的思想
 * 算法作用于容器的**元素** ---- 并不是作用于容器
 * 把find()独立到算法库，而不是当作容器的成员，提高了C++的**灵活型**，同时降低了标准库的**复杂性**，体现的是更高级的设计。
 
 # 注意
-* 对于有限编译器，容器类型嵌套是两个 `>` 之间要有<font color=red>**空格**</font>, 如 `map<string, vector<int> >` 否则编译器无法识别
+* 对于有限编译器，容器类型嵌套是两个 `>` 之间要有**空格**, 如 `map<string, vector<int> >` 否则编译器无法识别
